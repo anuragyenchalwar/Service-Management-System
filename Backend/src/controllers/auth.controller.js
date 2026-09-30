@@ -1,4 +1,5 @@
 const userModel = require("../models/user.model");
+const bcrypt = require('bcrypt');
 
 /**
  * 
@@ -29,5 +30,23 @@ async function registerUserController(req,res) {
         })
     }
 
-    
+    const hash = await bcrypt.hash(password,10)
+
+    const user = await userModel.create({
+        email,
+        username,
+        password : hash
+    })
+
+    return res.status(201).json({
+        user : {
+            userId:user._id,
+            username:user.username,
+            email:user.email
+        },
+        
+        message : 'user register successffully'
+    })
 }
+
+module.exports = {registerUserController}

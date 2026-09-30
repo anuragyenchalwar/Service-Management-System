@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
     {
-        username : {
+        username:{
             type : String,
             min : 3,
             trim : true,
@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
             unique : [true,'email already exist']
         },
         
-        email :{
+        email:{
             type :String,
             lowercase : true,
             unique : [true,'email already exist'],
@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
 
         },
 
-        password : {
+        password:{
             type : String,
             required : true,
             min : 6
