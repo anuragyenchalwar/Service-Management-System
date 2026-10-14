@@ -18,4 +18,5 @@ app.use(cookieParser());//middlware
 
 app.use('/api/auth', authRouter)
 
+
 module.exports = app;

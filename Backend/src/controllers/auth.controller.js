@@ -61,8 +61,8 @@ async function registerUserController(req,res) {
     })
 }
 
-async function loginUserController (req,res) {
-    const{username, password} = req.body;
+async function loginUserController(req,res) {
+    const{email, password} = req.body;
 
     if(!email || !password){
         return res.status(400).json({
@@ -84,11 +84,17 @@ async function loginUserController (req,res) {
     if(!isPasswordisCorrct){
         return res.status(401).json({
             message : "Invalid Password" 
-        });
+        });        
     }
+    return res.status(200).json({
+     message: "Login successful",
+     user: {
+        userId: user._id,
+        username: user.username,
+        email: user.email
+    }});
 
-  
     
 }
 
-module.exports = {registerUserController}
+module.exports = {registerUserController,loginUserController}
