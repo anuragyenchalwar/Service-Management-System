@@ -61,4 +61,34 @@ async function registerUserController(req,res) {
     })
 }
 
+async function loginUserController (req,res) {
+    const{username, password} = req.body;
+
+    if(!email || !password){
+        return res.status(400).json({
+            message : "please provide all the details"
+        });
+    }
+    const user = await userModel.findOne({ email });
+
+    if(!user){
+        return res.status(401).json({
+            message : "Email or Password is Invalid"
+        });
+    }
+
+    const isPasswordisCorrct = await bcrypt.compare(
+        password,user.password
+    );
+    
+    if(!isPasswordisCorrct){
+        return res.status(401).json({
+            message : "Invalid Password" 
+        });
+    }
+
+  
+    
+}
+
 module.exports = {registerUserController}
