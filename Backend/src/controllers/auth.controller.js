@@ -1,5 +1,6 @@
 const userModel = require("../models/user.model");
 const bcrypt = require('bcrypt');
+const { config } = require("dotenv");
 const jwt = require('jsonwebtoken');
 /**
  * 
@@ -86,6 +87,18 @@ async function loginUserController(req,res) {
             message : "Invalid Password" 
         });        
     }
+    
+    require("dotenv").config(); 
+    const token = jwt.sign({
+        id:user._id,
+        username:user.username
+    },
+    process.env.JWT_SERCRETE_KEY,{
+        expiresIn: "1d"
+    })
+
+    res.cookie('token',token);
+
     return res.status(200).json({
      message: "Login successful",
      user: {
