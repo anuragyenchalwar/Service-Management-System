@@ -122,4 +122,13 @@ async function getCUrrentUserController(req,res) {
     });  
 }
 
-module.exports = {registerUserController,loginUserController,getCUrrentUserController}
+
+async function logoutUserController(req,res) {
+    res.clearCookie("token");
+    return res.status(200).json({
+        message: "user logout successfully"
+    });
+    
+}
+
+module.exports = {registerUserController,loginUserController,getCUrrentUserController,logoutUserController}
