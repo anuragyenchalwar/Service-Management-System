@@ -1,6 +1,7 @@
 const userModel = require("../models/user.model");
 const bcrypt = require('bcrypt');
 const { config } = require("dotenv");
+const { json } = require("express");
 const jwt = require('jsonwebtoken');
 /**
  * 
@@ -110,4 +111,15 @@ async function loginUserController(req,res) {
     
 }
 
-module.exports = {registerUserController,loginUserController}
+
+async function getCUrrentUserController(req,res) {
+    return res.status(200).json({
+        message : "User detailes fetched successfully",
+        user:{
+            userId : req.user.id,
+            username : req.user.username
+        }
+    });  
+}
+
+module.exports = {registerUserController,loginUserController,getCUrrentUserController}
