@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema(
             min : 6
 
         }
+
+    },
+    {
+        timestamps : true
     }
 )
 
