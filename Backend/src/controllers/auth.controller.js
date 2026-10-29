@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const { config } = require("dotenv");
 const { json } = require("express");
 const jwt = require('jsonwebtoken');
+const blackListModel = require("../models/blackList.model");
 /**
  * 
  * @name registerUserController 
@@ -124,10 +125,16 @@ async function getCUrrentUserController(req,res) {
 
 
 async function logoutUserController(req,res) {
+    const token = req.cookies.token;
+    if(token){
+        await blackListModel.create({token})
+    }
     res.clearCookie("token");
+    
     return res.status(200).json({
         message: "user logout successfully"
     });
+
     
 }
 

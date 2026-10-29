@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
+const blackListModel = require("../models/blackList.model");
 
 //middleware intigration
-function authMiddleware (req, res, next){
+ async function authMiddleware (req, res, next){
     const token = req.cookies.token; //accessing the token from cookies
     
     if(!token){
@@ -9,6 +10,14 @@ function authMiddleware (req, res, next){
             message : "Authentication required!"
         })
     }
+
+    const isTokenAlreadyReg = await blackListModel.findOne({token});
+    if(isTokenAlreadyReg){
+        return res.status(401).json({
+            "message" : "invalid or expired token"
+        })
+    }
+
     
     try {
         const decoded = jwt.verify(
@@ -21,7 +30,7 @@ function authMiddleware (req, res, next){
 
     } catch (error) {
         return res.status(401).json({
-            "message" : "invalid or expired token"
+            "message" : "expired token"
         });    
     }
     next();
