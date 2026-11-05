@@ -11,7 +11,7 @@ const serviceRequestModel = require('../models/serviceRequestModel');
  */
 
 
-async function creatServeiceRequest(req,res){
+async function createServeiceRequestController(req,res){
     const{title,description,category} = req.body;
     if(!title || !description || !category){
         return res.status(400).json({
@@ -29,3 +29,5 @@ async function creatServeiceRequest(req,res){
         message : "serivce request seccessfully created"
     })
 }  
+
+module.exports = {createServeiceRequestController}
